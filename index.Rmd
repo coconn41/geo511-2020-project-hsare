@@ -27,6 +27,7 @@ I loaded required packages
 
 ```{r, message=F, warning=F}
 library(raster)
+library(threejs)
 library(tidyverse)
 library(sf)
 library(rpart)
@@ -38,6 +39,7 @@ library(caret)
 library(forcats)
 library(sp)
 library(raster)
+library(csvread)
 ```
 
 I prepare the data by reading in the different bands that comprise the satelitte imagery. Each band refers to different spectrum.
@@ -66,28 +68,27 @@ band9 <- ("b09.tiff")
 
 
 ```{r, message=F, warning=F}
-library(raster)
 #This first part of the plot is an example on how it works with Landsat data for Earth
-Band1 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B02.tif")
+ Band1 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B02.tif")
 #(band1 <- raster("B02.tif"))
-Band2 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B03.tif")
-Band3 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B04.tif")
-Band4 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B05.tif")
-Band5 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B06.tif")
-Band6 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B07.tif")
-Band7 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B08.tif")
+ Band2 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B03.tif")
+ Band3 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B04.tif")
+ Band4 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B05.tif")
+ Band5 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B06.tif")
+ Band6 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B07.tif")
+ Band7 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/B08.tif")
 
 
 #This first part  is showing how it works with Mars data
-band1 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b01.tiff")
-band2 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b02.tiff")
-band3 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b03.tiff")
-band4 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b04.tiff")
-band5 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b05.tiff")
-band6 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b06.tiff")
-band7 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b07.tiff")
-band8 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b08.tiff")
-band9 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b09.tiff")
+ band1 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b01.tiff")
+ band2 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b02.tiff")
+ band3 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b03.tiff")
+ band4 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b04.tiff")
+ band5 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b05.tiff")
+ band6 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b06.tiff")
+ band7 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b07.tiff")
+ band8 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b08.tiff")
+ band9 <- raster("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/selection_of_landingMining_sites/b09.tiff")
 ```
 
 Show result of band1
@@ -261,23 +262,18 @@ as(MNDWI, "SpatialPixelsDataFrame") %>%
 
 I loaded required packages
 
-```{r, message=F, warning=F}
-library(threejs)
-```
 
 ##Results2
 I firstly prepared and loaded the data and then with the package called "streejs" I plot the exact locations of landing and mining sites on the Martian global map. I created a cvs file where I stored the latitudes and logitude of the future landing and mining sites selested and call that file in R.
 
 
 ```{r}
-library(threejs)
-library(csvread)
-the_martian <- read.csv("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/visualize_of_landingMining_sites/the_martian.csv", comment.char="#")
+ the_martian <- read.csv("C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/visualize_of_landingMining_sites/the_martian.csv", comment.char="#")
                         
 #the_martian.csv <- ("C:/Users/Owner/Desktop/sare  backup/c/user #hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/visualize_of_landi#ngMining_sites/the_martian.cvs")
   
 
-globejs(img = "C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/visualize_of_landingMining_sites/Mars_Viking_MDIM21_ClrMosaic_global_1024.jpg", bodycolor="#555555", emissive="#444444",
+ globejs(img = "C:/Users/Owner/Desktop/sare  backup/c/user hadar/Desktop/GEO511/Tasks/geo511-tasks-hsare/geo511-2020-final-project/geo511-2020-project-hsare/visualize_of_landingMining_sites/Mars_Viking_MDIM21_ClrMosaic_global_1024.jpg", bodycolor="#555555", emissive="#444444",
         lightcolor="#555555",
         lat = the_martian$x,
         long = the_martian$y)
